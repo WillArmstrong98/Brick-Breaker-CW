@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry excluding="samples/Exercise2/|samples/Exercise3/|samples/Exercise4/|samples/Exercise5/|samples/Exercise6/|samples/Exercise7/|samples/ResizeTest/|samples/LineTextTest/|samples/Invaders/|samples/ArrowTest/|samples/Racer/" kind="src" path=""/>
+	<classpathentry kind="src" path="samples/ArrowTest"/>
+	<classpathentry kind="src" path="samples/Exercise2"/>
+	<classpathentry kind="src" path="samples/Exercise3"/>
+	<classpathentry kind="src" path="samples/Exercise4"/>
+	<classpathentry kind="src" path="samples/Exercise5"/>
+	<classpathentry kind="src" path="samples/Exercise6"/>
+	<classpathentry kind="src" path="samples/Exercise7"/>
+	<classpathentry kind="src" path="samples/Invaders"/>
+	<classpathentry kind="src" path="samples/LineTextTest"/>
+	<classpathentry kind="src" path="samples/Racer"/>
+	<classpathentry kind="src" path="samples/ResizeTest"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
