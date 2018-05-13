@@ -54,7 +54,7 @@ public class cw
        Game.addRectangle(LeftRed);
        Game.addRectangle(RightRed);
        Game.update();
-    		  yeet
+    		 
       for (int c = 0; c <4; c++)
        { 
            for (int xl1 = 150; xl1<850; xl1 = xl1 + 200)
