@@ -633,4 +633,13 @@ public class GameArena
     {
         return jfxPanel;
     }
-}
+
+     public void stop()
+     {
+        try
+           {
+              Thread.sleep(18);
+           }
+        catch(Exception e){}
+     }
+  }

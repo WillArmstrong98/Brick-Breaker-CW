@@ -9,10 +9,10 @@ public class cw
        /**Brick Arrays for each line of bricks**/
        Rectangle[] R1 = new Rectangle[5];
        Rectangle[] R2 = new Rectangle[4];
-       double Xlocation; 
 
        GameArena Game = new GameArena(900,900);
        Ball b = new Ball(450, 710, 10, "WHITE");
+       
        Rectangle BounceBoard = new Rectangle(450,750,150,10,"BLUE");
        /**Points Board**/  
        Rectangle PointsBoard = new Rectangle(0,900,1800,200,"YELLOW");
@@ -23,6 +23,8 @@ public class cw
        Rectangle PointsCounterBlockBorder = new Rectangle(180,830,53,43,"BLACK");
        Rectangle RedBar = new Rectangle(0,890,1800,200,"RED");
        Text PointsCounter = new Text("0",173,837,25,"BLACK");
+       Text StartGame = new Text("Press SPACE to start!",280,873,40,"BLACK");
+       Rectangle StartGameCover = new Rectangle(465,855,485,50,"YELLOW");
        /**Title Board**/
        Rectangle TitleLabelYellow = new Rectangle(0,0,1800,180,"YELLOW");
        Rectangle Redbar1 = new Rectangle(0,0,1800,200,"RED");
@@ -33,7 +35,7 @@ public class cw
        Rectangle LeftRed = new Rectangle(0,450,20,700,"RED");
        Rectangle RightRed = new Rectangle(900,450,20,700,"RED");
        
-       Game.addBall(b);
+
        Game.addRectangle(BounceBoard);   
 
        Game.addRectangle(RedBar);
@@ -45,6 +47,7 @@ public class cw
        Game.addRectangle(PointsCounterBlock);
        Game.addText(PointsCounter);
        Game.addRectangle(Redbar1);
+       Game.addText(StartGame);
       
        Game.addRectangle(TitleLabelYellow);
        Game.addRectangle(TitleLabelBorder);
@@ -54,7 +57,8 @@ public class cw
        Game.addRectangle(LeftRed);
        Game.addRectangle(RightRed);
        Game.update();
-    		 
+       
+      
       for (int c = 0; c <4; c++)
        { 
            for (int xl1 = 150; xl1<850; xl1 = xl1 + 200)
@@ -73,22 +77,44 @@ public class cw
                }   
            }    
        }
-       
-       while(true)
-       {
-          if(Game.leftPressed()==true)
-            {
-             Xlocation = BounceBoard.getXPosition();
-             Xlocation = Xlocation + 50;
-             BounceBoard.setXPosition(Xlocation);
-             System.out.println("test/n");
-             Game.update();
-            }
+     
+      while(true)
+      {
+         if(Game.leftPressed() )  
+         {
+            BounceBoard.setXPosition(BounceBoard.getXPosition() - 10);      
+         }
+         if(Game.rightPressed() )
+         {
+        	 BounceBoard.setXPosition(BounceBoard.getXPosition() + 10);
+         }
+         if(BounceBoard.getXPosition() < 67)
+         {
+        	 BounceBoard.setXPosition(68);
+         }
+         if(BounceBoard.getXPosition() > 830)
+         {
+        	 BounceBoard.setXPosition(829);
+         }
+         if(Game.spacePressed() )
+         {	
+             Game.addBall(b);  
+             Game.addRectangle(StartGameCover);
+         } 
+         b.setXPosition(b.getXPosition()-5);
+         b.setYPosition(b.getYPosition()-5);
+         
+         Game.stop();
+         Game.update();
+      
           
         }    
            
           
     }
-   
+       
+       
+
+
 }
 
