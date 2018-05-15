@@ -206,6 +206,10 @@ public class Arrow
         ay1 = ye - (ye - ay1) * (arrowHeadLength / 100.0); 
         ay2 = ye - (ye - ay2) * (arrowHeadLength / 100.0); 
 
+        line[0].setStart(xStart, yStart);
+        line[0].setEnd(xe, ye);
+        line[0].setColour("BLACK");
+        
         line[1].setStart(ax1, ay1);
         line[1].setEnd(xe, ye);
 
