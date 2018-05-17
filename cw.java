@@ -2,15 +2,12 @@ public class cw
 { 
     public static void main(String[] args)
     { 
-       /**Brick Arrays for each line of bricks**/
-       Rectangle[] R1 = new Rectangle[6];
-       Rectangle[] R2 = new Rectangle[6];
-       Rectangle[] R3 = new Rectangle[6];
-
-       GameArena Game = new GameArena(900,900);
-       Ball b = new Ball(450, 690, 10, "WHITE");
-       Arrow a = new Arrow(450,800,450,700,6,"RED", Game);
+       /**Brick Arrays for bricks**/
+       Rectangle[] R1 = new Rectangle[18];
        
+       GameArena Game = new GameArena(900,900);
+       Ball b = new Ball(500, 200, 10, "WHITE");
+       Arrow a = new Arrow(450,800,450,700,6,"RED", Game);
        /**Points Board**/  
        Rectangle PointsBoard = new Rectangle(0,900,1800,200,"YELLOW");
        Rectangle PointsLabelBlock = new Rectangle(100,830,100,40,"RED");
@@ -30,8 +27,9 @@ public class cw
        Rectangle LeftRed = new Rectangle(0,450,20,700,"RED");
        Rectangle RightRed = new Rectangle(900,450,20,700,"RED");
        
- 
-       /**Adding objects into the window**/
+       Text TEST = new Text("TEST", 400,600,40,"WHITE");
+       
+        /**Adding objects into the window**/
        Game.addRectangle(RedBar);
        Game.addRectangle(PointsBoard);
        Game.addRectangle(PointsLabelBorder);
@@ -48,80 +46,123 @@ public class cw
        Game.addRectangle(LeftRed);
        Game.addRectangle(RightRed);
        
-      /**Displaying the bricks**/
-      for (int c = 0; c <6; c++)
-       { 
-           for (int xl1 = 175; xl1<=725; xl1 = xl1 + 110)
-           {
-        	  /**Bottom Row**/
-              R1[c] = new Rectangle(xl1,360,100,50,"GREEN");
-              Game.addRectangle(R1[c]);
-           }   
-           for (int xl2 = 175; xl2<=725; xl2 = xl2 + 110)
-           {
-               /**Top Row**/
-               R2[c] = new Rectangle(xl2,240,100,50,"RED");
-               Game.addRectangle(R2[c]);
-           }  
-                     
-           for (int xl3 = 175; xl3<=725; xl3 = xl3 + 110)
-           {
-              /**Middle Row**/
-              R3[c] = new Rectangle(xl3,300,100,50,"ORANGE");
-              Game.addRectangle(R3[c]);
-           }
+       /**Displaying the bricks**/
+       int spacing1 = 0;
+       int spacing2 = 0;
+       int total = 0;
+       
+       for (int c = 0; c < 3; c++)
+       {
+     	  for (int c2 = 0; c2 < 6; c2++)
+     	  {
+     		  R1[total] = new Rectangle(170 + spacing1,300 + spacing2,100,50,"ORANGE");
+     		  Game.addRectangle(R1[total]);
+     		  spacing1 = spacing1 + 110;
+     		  total ++;
+     	  }
+     	  /**Pushing Y down 60 for each row**/
+     	  spacing2 = spacing2 + 60;
+     	  spacing1 = 0;
        }
       
       Game.addBall(b);
-      /**X and Y co-ordinate direction variables**/
-      int XD = -5;
-      int YD = -1;
+      /**X and Y co-ordinate direction variables, as well as negative number used to control whether XD and YD are positive/negative**/
+      double XD = -2.5;
+      double YD = -5;
       int neg = -1;
-
+      int xnext = 0;
+      int ynext = 0;
+      Boolean[] beenHit = new Boolean[18];
+      
+      /**While loop which constantly keeps the ball moving and responds to user input for the arrow**/
       while(true)
-      {
-    	  if(a.getEndX()==450)
+      {   
+    	  ynext = 0;
+          total = 0;
+          
+    	  for(int c = 0; c < 3; c++)
+		  {
+			  for(int c1 = 0; c1 < 6; c1++)
+			  {
+    				  /**bottom edge of brick**/
+    		    	  if((b.getXPosition() >= 115 + xnext && b.getXPosition() <= 215 + xnext) && (b.getYPosition() >= 340 + ynext && b.getYPosition() <= 350 + ynext))
+    		          {
+    		              Game.removeRectangle(R1[total]);
+    		              Game.addText(TEST);
+    		              YD = YD * neg;
+    		          }
+    		    	  /**Top edge**/
+    		    	  if((b.getXPosition() >= 115 + xnext && b.getXPosition() <= 215 + xnext) && (b.getYPosition() >= 265 + ynext && b.getYPosition() <= 270 + ynext))
+    		          {
+    		              Game.removeRectangle(R1[total]);
+    		              Game.addText(TEST);
+    		              YD = YD * neg;
+    		          }
+    		    	  /**left side**/
+    		    	  if((b.getXPosition() >= 115 + xnext && b.getXPosition() <= 125 + xnext) && (b.getYPosition() >= 265 + ynext && b.getYPosition() <= 315 + ynext))
+    		          {
+    		              Game.removeRectangle(R1[total]);
+    		              Game.addText(TEST);
+    		              XD = XD * neg;
+    		          }
+    		    	  /**right side**/
+    		    	  if((b.getXPosition() >= 205 + xnext && b.getXPosition() <= 215 + xnext) && (b.getYPosition() >= 265 + ynext && b.getYPosition() <= 315 + ynext))
+    		          {
+    		              Game.removeRectangle(R1[total]);
+    		              Game.addText(TEST);
+    		              XD = XD * neg;
+    		          }
+    		    	  
+    		    	  xnext = xnext + 110;
+    		    	  total = total + 1;
+			  }
+			  xnext = 0;
+			  ynext = ynext + 54;		  
+		  }
+    	 
+    		  
+    	  if(a.getEndX() == 450 )
      	  {
      	    if(Game.leftPressed() )
      	    {
-     	    	a.setEnd(a.getEndX()-1,a.getEndY());
+     	    	a.setEnd(a.getEndX() -1 ,a.getEndY());
      	    }
      	    if(Game.rightPressed() )
     		{
-    			a.setEnd(a.getEndX()+1,a.getEndY());
+    			a.setEnd(a.getEndX() +1 ,a.getEndY());
     		}
      	  } 
-    	  if(a.getEndX()>450)
+    	  if(a.getEndX()> 450 )
      	  {
      	    if(Game.leftPressed() )
      	    {
-     	    	a.setEnd(a.getEndX()-3,a.getEndY()-3);
+     	    	a.setEnd(a.getEndX() -3 ,a.getEndY() -3) ;
      	    }
      	    if(Game.rightPressed() )
     		{
-    		    a.setEnd(a.getEndX()+3,a.getEndY()+3);
+    		    a.setEnd(a.getEndX() +3 ,a.getEndY() +3 );
     		}
      	  }    
-     	  if(a.getEndX()<450)
+     	  if(a.getEndX() <450 )
      	  {
      		if(Game.leftPressed() )
      	    {
-     		    a.setEnd(a.getEndX()-3,a.getEndY()+3);
+     		    a.setEnd(a.getEndX() -3 ,a.getEndY() +3 );
      	    }
      		if(Game.rightPressed() )
      		{
-     		    a.setEnd(a.getEndX()+3,a.getEndY()-3);
+     		    a.setEnd(a.getEndX() +3 ,a.getEndY() -3 );
      		}
      	  }
-     	  if(a.getEndY()>750)
+     	  if(a.getEndY() >750 )
      	  {
      		if(Game.rightPressed() )
      		{
-     		    a.setEnd(a.getEndX()-3, 749);
+     		    a.setEnd(a.getEndX() -3, 749);
      		}
      		if(Game.leftPressed() )
      		{
-     			a.setEnd(a.getEndX()+3, 749);
+     			a.setEnd(a.getEndX() +3, 749);
      		}
      	  }
           if(b.getXPosition() < 20)
@@ -138,21 +179,20 @@ public class cw
           }
           if(b.getYPosition() > 780)
           {
-         	 b.setXPosition(450);
-         	 b.setYPosition(690);
-         	 XD = 0;
-         	 YD = 0;
+         	 
+         	 YD = YD * neg;
           }
           b.setXPosition(b.getXPosition()+XD);
           b.setYPosition(b.getYPosition()+YD);
-          
-          Game.stop();
+
+          Game.stop(); 
           Game.update();
     }
             
    }
+    }
 
-}     
+     
           
     
     
