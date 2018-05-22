@@ -1,3 +1,7 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.lang.Math.*;
 public class cw
 { 
     public static void main(String[] args)
@@ -6,7 +10,8 @@ public class cw
        Rectangle[] R1 = new Rectangle[18];
        
        GameArena Game = new GameArena(900,900);
-       Ball b = new Ball(500, 200, 10, "WHITE");
+       Ball [] b = new Ball[8];
+
        Arrow a = new Arrow(450,800,450,700,6,"RED", Game);
        /**Points Board**/  
        Rectangle PointsBoard = new Rectangle(0,900,1800,200,"YELLOW");
@@ -29,7 +34,7 @@ public class cw
        
        Text TEST = new Text("TEST", 400,600,40,"WHITE");
        
-        /**Adding objects into the window**/
+       /**Adding objects into the window**/
        Game.addRectangle(RedBar);
        Game.addRectangle(PointsBoard);
        Game.addRectangle(PointsLabelBorder);
@@ -45,7 +50,7 @@ public class cw
        Game.addText(Title);
        Game.addRectangle(LeftRed);
        Game.addRectangle(RightRed);
-       
+
        /**Displaying the bricks**/
        int spacing1 = 0;
        int spacing2 = 0;
@@ -64,63 +69,93 @@ public class cw
      	  spacing2 = spacing2 + 60;
      	  spacing1 = 0;
        }
-      
-      Game.addBall(b);
+         
+         int spacing3 = 0;
+         for(int c4 = 0; c4 < 8; c4++)
+	       {
+    		  
+    		  {
+    		      b[c4] = new Ball(450,770 + spacing3,10,"WHITE");
+                      Game.addBall(b[c4]);
+                             
+    		  }
+               
+                spacing3 = spacing3 + 30;
+               }
+
       /**X and Y co-ordinate direction variables, as well as negative number used to control whether XD and YD are positive/negative**/
-      double XD = -2.5;
-      double YD = -5;
-      int neg = -1;
-      int xnext = 0;
-      int ynext = 0;
-      Boolean[] beenHit = new Boolean[18];
+      double XD = 0;
+      double YD = 0;
+      double neg = -1;
+      double xnext = 0;
+      double ynext = 0;
+      double aEX = 0;
+      double aSX = 0;
+      double aEY = 0; 
+      double lX = 0;
+      double lY = 0;
+      double lX1 = 0;
+      double spacing4 = 0;
       
+      Boolean[] beenHit = new Boolean[18];
+      for(int c2 = 0; c2 <18; c2++)
+      {
+         beenHit[c2] = false;
+      } 
+      Game.update();
       /**While loop which constantly keeps the ball moving and responds to user input for the arrow**/
       while(true)
       {   
     	  ynext = 0;
           total = 0;
-          
+        
+        
     	  for(int c = 0; c < 3; c++)
-		  {
-			  for(int c1 = 0; c1 < 6; c1++)
-			  {
-    				  /**bottom edge of brick**/
-    		    	  if((b.getXPosition() >= 115 + xnext && b.getXPosition() <= 215 + xnext) && (b.getYPosition() >= 340 + ynext && b.getYPosition() <= 350 + ynext))
+          {
+    	       for(int c1 = 0; c1 < 6; c1++)
+	       {
+                 for(int c6 = 0; c6 <8; c6++)
+                 {
+                 
+    			  /**bottom edge of brick**/
+    		    	  if((b[c6].getXPosition() >= 120 + xnext && b[c6].getXPosition() <= 225 + xnext) && (b[c6].getYPosition() >= 320 + ynext && b[c6].getYPosition() <= 330 + ynext))
     		          {
     		              Game.removeRectangle(R1[total]);
-    		              Game.addText(TEST);
     		              YD = YD * neg;
+                             
     		          }
     		    	  /**Top edge**/
-    		    	  if((b.getXPosition() >= 115 + xnext && b.getXPosition() <= 215 + xnext) && (b.getYPosition() >= 265 + ynext && b.getYPosition() <= 270 + ynext))
+    		    	  if((b[c6].getXPosition() >= 120 + xnext && b[c6].getXPosition() <= 220 + xnext) && (b[c6].getYPosition() >= 270 + ynext && b[c6].getYPosition() <= 275 + ynext))
     		          {
     		              Game.removeRectangle(R1[total]);
-    		              Game.addText(TEST);
     		              YD = YD * neg;
+                           
     		          }
     		    	  /**left side**/
-    		    	  if((b.getXPosition() >= 115 + xnext && b.getXPosition() <= 125 + xnext) && (b.getYPosition() >= 265 + ynext && b.getYPosition() <= 315 + ynext))
+    		    	  if((b[c6].getXPosition() >= 115 + xnext && b[c6].getXPosition() <= 125 + xnext) && (b[c6].getYPosition() >= 275 + ynext && b[c6].getYPosition() <= 325 + ynext))
     		          {
     		              Game.removeRectangle(R1[total]);
-    		              Game.addText(TEST);
     		              XD = XD * neg;
+                             
     		          }
     		    	  /**right side**/
-    		    	  if((b.getXPosition() >= 205 + xnext && b.getXPosition() <= 215 + xnext) && (b.getYPosition() >= 265 + ynext && b.getYPosition() <= 315 + ynext))
+    		    	  if((b[c6].getXPosition() >= 215 + xnext && b[c6].getXPosition() <= 225 + xnext) && (b[c6].getYPosition() >= 275 + ynext && b[c6].getYPosition() <= 325 + ynext))
     		          {
     		              Game.removeRectangle(R1[total]);
-    		              Game.addText(TEST);
     		              XD = XD * neg;
+                           
     		          }
-    		    	  
+    		    	  }
     		    	  xnext = xnext + 110;
     		    	  total = total + 1;
-			  }
-			  xnext = 0;
-			  ynext = ynext + 54;		  
-		  }
-    	 
-    		  
+               }
+           xnext = 0;
+	   ynext = ynext + 60;		  
+           }
+    	                  
+    	       
+              
+      	  
     	  if(a.getEndX() == 450 )
      	  {
      	    if(Game.leftPressed() )
@@ -128,9 +163,9 @@ public class cw
      	    	a.setEnd(a.getEndX() -1 ,a.getEndY());
      	    }
      	    if(Game.rightPressed() )
-    		{
-    			a.setEnd(a.getEndX() +1 ,a.getEndY());
-    		}
+    	    {
+    		a.setEnd(a.getEndX() +1 ,a.getEndY());
+            }
      	  } 
     	  if(a.getEndX()> 450 )
      	  {
@@ -146,9 +181,9 @@ public class cw
      	  if(a.getEndX() <450 )
      	  {
      		if(Game.leftPressed() )
-     	    {
+     	        {
      		    a.setEnd(a.getEndX() -3 ,a.getEndY() +3 );
-     	    }
+     	        }
      		if(Game.rightPressed() )
      		{
      		    a.setEnd(a.getEndX() +3 ,a.getEndY() -3 );
@@ -165,48 +200,74 @@ public class cw
      			a.setEnd(a.getEndX() +3, 749);
      		}
      	  }
-          if(b.getXPosition() < 20)
+         aEX = a.getEndX();
+         aSX = a.getStartX();
+         aEY = a.getEndY();
+  
+         for(int c5 = 0; c5 < 8; c5++)
+         {
+            b[c5].setXPosition(b[c5].getXPosition()+XD);
+            b[c5].setYPosition(b[c5].getYPosition()+YD);
+            Game.update();
+         }
+         if(Game.spacePressed())
           {
+              lY = (aEY - 700);
+              lX = (aSX - aEX);
+              if(lX < 0)
+                {
+                   lX1 = 1;
+                }
+              if(lX > 0)
+                {
+                   lX1 = -1;
+                }  
+              if(lX == 0)
+                {
+                   lX1 = 0;
+                }
+              for(int c7 = 0; c7 < 8; c7++)
+              {
+                 if(lX < 0)
+                 {
+                    b[c7].setXPosition(450 - lX - spacing4);
+                    b[c7].setYPosition(700 + lY + spacing4);
+                 }
+                 if(lX > 0)
+                 {
+                    b[c7].setXPosition(450 - lX + spacing4);
+                    b[c7].setYPosition(700 + lY + spacing4);
+                 }
+                 if(lX == 0)
+                 {
+                    b[c7].setXPosition(450 - lX);
+                    b[c7].setYPosition(700 + lY + spacing4);
+                 }
+                 XD = 3 * lX1;
+                 YD = -3;
+                 spacing4 = spacing4 + 30; 
+                 Game.update();
+                          
+              }
+          for(int c8 = 0; c8 < 8; c8++)
+          {
+              if(b[c8].getXPosition() < 20)
+              {
          	  XD = XD * neg;
-          }         
-          if(b.getXPosition() > 875)
-          {
+              }         
+              if(b[c8].getXPosition() > 875)
+              {
          	 XD = XD * neg;
-          }
-          if(b.getYPosition() < 110)
-          {
+              }
+              if(b[c8].getYPosition() < 110)
+              {
          	 YD = YD * neg;
+              }
+              
+              Game.update();
           }
-          if(b.getYPosition() > 780)
-          {
-         	 
-         	 YD = YD * neg;
-          }
-          b.setXPosition(b.getXPosition()+XD);
-          b.setYPosition(b.getYPosition()+YD);
-
-          Game.stop(); 
           Game.update();
-    }
-            
+       }
    }
-    }
-
-     
-          
-    
-    
-       
-       
-
-
-
-
-
-    
-       
-       
-
-
-
-
+} 
+}
